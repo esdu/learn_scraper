@@ -2,6 +2,10 @@
 
 Hello Waterloo student, this is a program to pull all the files from your classes down from Learn.
 
+## Wait a minute
+
+[desire2download](https://github.com/sholiday/desire2download) is more stable and fully featured than this project. Let's use that.
+
 ## How to run
 
 1. Copy `config.yml.example` to `config.yml`, and put in your information. Optionally specify `dropbox_path` to put downloaded files under that path.
