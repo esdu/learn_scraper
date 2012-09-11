@@ -1,0 +1,13 @@
+username: esdu
+
+password: 12345
+
+# This is a list of classes you want to pull files from.
+# The names must match what's shown on Learn!
+classes:
+  - AFM 131/ARBUS 101
+  - ECON 101
+  - ECON 102
+  - MATH 235
+
+dropbox_location: /Users/eddiedu/Dropbox/School # optional
