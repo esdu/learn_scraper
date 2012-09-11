@@ -84,10 +84,10 @@ class ClassPage < Page
     file = iframe.click
 
     # Class names like "AFM 131 / ARBUS 101" -> "AFM 131 - ARBUS 101"
-    folder = "#{@output_dir}/#{@class_name.gsub('/', ' - ')}"
+    folder = File.join(@output_dir, @class_name.gsub('/', ' - '))
     FileUtils.mkdir_p folder
     filename = clean_filename(file.filename)
-    path = "#{folder}/#{filename}"
+    path = File.join(folder, filename)
 
     if FileTest.exists? path
       puts "#{@@skip} #{path}"
@@ -130,7 +130,7 @@ class LearnScraper
 
   def work
     current_dir = File.expand_path(File.dirname(__FILE__))
-    output_dir = @config[:dropbox_location] || "#{current_dir}/downloads"
+    output_dir = @config[:dropbox_location] || File.join(current_dir, "downloads")
 
     home_page =
       HomePage.new(LoginPage.new.login(@config[:username], @config[:password]))
@@ -144,7 +144,6 @@ end
 
 puts "Starting Scraper"
 puts Page.legend
-
 beginning = Time.now
 
 LearnScraper.new.work
