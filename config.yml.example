@@ -10,4 +10,6 @@ classes:
   - ECON 102
   - MATH 235
 
-dropbox_location: /Users/eddiedu/Dropbox/School # optional
+# Optional. By default it will put downloaded files into
+# a 'downloads' folder inside the app's folder.
+dropbox_location: /Users/eddiedu/Dropbox/School

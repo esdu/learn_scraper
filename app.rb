@@ -31,6 +31,16 @@ class LoginPage < Page
   end
 end
 
+class HomePage < Page
+  def initialize(page)
+    @page = page
+  end
+
+  def find_class_link(class_name)
+    regex_link(@page, class_name)
+  end
+end
+
 class ClassPage < Page
   def initialize(link, class_name, output_dir)
     @page = link.click
@@ -74,7 +84,7 @@ class ClassPage < Page
     file = iframe.click
 
     # Class names like "AFM 131 / ARBUS 101" -> "AFM 131 - ARBUS 101"
-    folder = "#{@output_dir}/downloads/#{@class_name.gsub('/', ' - ')}"
+    folder = "#{@output_dir}/#{@class_name.gsub('/', ' - ')}"
     FileUtils.mkdir_p folder
     filename = clean_filename(file.filename)
     path = "#{folder}/#{filename}"
@@ -103,7 +113,7 @@ class ClassPage < Page
   end
 end
 
-class LearnScraper < Page
+class LearnScraper
   def initialize()
     @config = read_config
   end
@@ -120,11 +130,13 @@ class LearnScraper < Page
 
   def work
     current_dir = File.expand_path(File.dirname(__FILE__))
-    output_dir = @config[:dropbox_location] || current_dir
+    output_dir = @config[:dropbox_location] || "#{current_dir}/downloads"
 
-    home_page = LoginPage.new.login(@config[:username], @config[:password])
+    home_page =
+      HomePage.new(LoginPage.new.login(@config[:username], @config[:password]))
+
     @config[:classes].each do |class_name|
-      link = regex_link(home_page, class_name)
+      link = home_page.find_class_link class_name
       ClassPage.new(link, class_name, output_dir).work
     end
   end
